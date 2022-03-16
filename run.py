@@ -2,6 +2,7 @@
 from msilib.schema import Directory
 from re import template
 from unicodedata import name
+from urllib import request
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
@@ -19,8 +20,12 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)
-async def holaMundo(request: Request):
+async def inicio(request: Request):
     return templates.TemplateResponse("index.html", {"request":request})
+
+@app.get("/diferenciales", response_class=HTMLResponse)
+async def differential_solver(reques: Request):
+    return templates.TemplateResponse("ecuaciones.html", {"request":request})
 
 @app.get("/items/{id}", response_class=HTMLResponse)
 async def root(request: Request, id:str):
